@@ -2,7 +2,7 @@
 
 ## Setup
 
-Install dependencies with `npm install`.
+Install dependencies with `npm install`. React practice project.
 
 ## Running Webpack Development Server
 
