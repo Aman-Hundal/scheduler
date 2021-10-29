@@ -5,7 +5,6 @@ export const getAppointmentsForDay = function(state, day) {
     return resultArr;
   }
 
-  
   const apptKeysArr = Object.keys(state.appointments);
   
   const dailyAppts = state.days.filter((elm) => {
