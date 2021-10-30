@@ -23,3 +23,21 @@ export const getAppointmentsForDay = function(state, day) {
 
   return resultArr;
 };
+
+export const getInterview = function (state, interview) {
+  const newObj = {};
+  const interviewerObj = state.interviewers;
+  // interview.student
+  // interview.interviewers
+  if (!interview) {
+    return null;
+  }
+  // console.log(interviewerObj)
+  for (const key in interviewerObj) {
+    if (Number(key) === interview.interviewer) {
+      newObj.student = interview.student;
+      newObj.interviewer = state.interviewers[key];
+    }
+  }
+  return newObj;
+}
