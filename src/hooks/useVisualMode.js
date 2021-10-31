@@ -5,12 +5,6 @@ const useVisualMode = function(initial) {
 
   const transition = function(newMode, replace = false) {
 
-    if (replace) {
-      setHistory((prev) => {
-        return [...history].splice(-1,1, newMode); // RETURN CAN NVER BE followed by an = ex[ression]
-      })
-    }
-
     // console.log([...history].splice(-1,1, newMode))
     
     setHistory((prev) => { 

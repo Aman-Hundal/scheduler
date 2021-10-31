@@ -41,3 +41,29 @@ export const getInterview = function (state, interview) {
   }
   return newObj;
 }
+
+export const getInterviewersForDay = function(state, day) {
+  const resultArr = [];
+  
+  if (state.days.length === 0) {
+    return resultArr;
+  }
+
+  const interKeysArr = Object.keys(state.interviewers);
+  
+  const dailyinter = state.days.filter((elm) => {
+    return elm.name === day;
+  });
+
+  if (dailyinter.length === 0) {
+    return resultArr;
+  }
+
+  for (const key of interKeysArr) {
+    if (dailyinter[0].interviewers.includes(Number(key))) {
+      resultArr.push(state.interviewers[key])
+    }
+  }
+
+  return resultArr;
+};

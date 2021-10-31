@@ -3,7 +3,7 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment  from "./Appointment";
 import axios from 'axios';
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({ //parent object that stores every STATE. Rule of react -> we have to use setState function and throw out the old state and create a new one. SetStates works like this -> takes what the state is going to be and throws out the old state and repalces it with new
@@ -14,6 +14,7 @@ export default function Application(props) {
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.selectedDay);
+  const dailyInterviewers = getInterviewersForDay(state, state.selectedDay);
 
   const setSelectedDay = selectedDay => setState({ ...state, selectedDay }); //creates a function called setSelectedDay which updates the state of the selectedDay state. CAN DO THIS FOR DAYS AND APPOINTMENTS TOO TO CREATE SEPEARTE ACTION STATE SETTERS FOR THEIR OWN SPECIFIC STATES.
   // const setDays = (days) => { //createing a specific setter above using different function notation
@@ -24,7 +25,7 @@ export default function Application(props) {
   const baseURL = "http://localhost:8001";
   const parsedAppointments = dailyAppointments.map((appts) => {
     const interview = getInterview(state, appts.interview);
-    return <Appointment key={appts.id} id={appts.id} interview={interview} time={appts.time} />
+    return <Appointment key={appts.id} id={appts.id} interview={interview} time={appts.time} dailyInterviewers={dailyInterviewers} />
   });
   parsedAppointments.push(<Appointment key="last" time="5pm" />)
 
