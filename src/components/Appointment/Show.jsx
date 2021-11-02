@@ -2,6 +2,7 @@ import React from 'react';
 
 export default function Show(props) {
   const { student, interviewer, onEdit, onDelete } = props;
+  console.log("SHOW:", interviewer)
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -13,12 +14,12 @@ export default function Show(props) {
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <img onClick={onEdit}
+          <img onClick={() => {onEdit()}}
             className="appointment__actions-button"
             src="images/edit.png"
             alt="Edit"
           />
-          <img onClick={onDelete}
+          <img onClick={() => {onDelete()}}
             className="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"

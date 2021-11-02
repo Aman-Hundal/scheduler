@@ -13,6 +13,35 @@ export default function Application(props) {
     interviewers: {}
   });
 
+  const bookInterview = async function(id, interview) { //function will allow us to change the local state when we book an interview. -> change the interviewers object in state obj
+    // console.log("ID is:",id, interview);
+    const appointment = { //We want to create a new appointment object starting with the values copied from the existing appointment. We replace the current value of the interview key with the new value.
+      ...state.appointments[id], //copy of current appointment object with the match id above. We can keep this info the same (no need to change appointment id already in DB/state)
+      interview: {...interview} //new interview object for the new appointment. comma after spread opperator = new data for the copied data
+    };
+    const appointments = { //Now that we have an appointment object, we can move a level up and work on updating the appointments object. We use the update pattern to replace the existing record with the matching id.
+      ...state.appointments, //make copy of appointments state in the state object above
+      [id]: appointment //add the new appointment object created in this function as new data to the copied appointments variable. we use the id to replace the existing record (in the db) with the matchhing id
+    };
+    await axios.put(baseURL+`/api/appointments/${id}`, {interview}) //axios call to update our api db with the inerview data sent over
+    .then((response) => {
+      console.log(response.status)
+      setState({...state, appointments}); //this recreates the state object and then after the comma it replaces the previous appointments with the new appointments created above. With spread operators if we pass in a value with the same name as a value that exists in the spreaded obj after a comma the value mentioned will be adjusted/modified/updated 
+    })
+  }
+
+  const cancelInterview = async function(id) {
+    // console.log("appointment id:", id)
+    const deletedAppointment = {...state.appointments[id], interview: null};
+    const appointments = {...state.appointments, [id]: deletedAppointment};
+    await axios.delete(baseURL+`/api/appointments/${id}`)
+    .then((response) => {
+      console.log(response.status)
+      setState({...state, appointments})
+    })
+    
+  }
+
   const dailyAppointments = getAppointmentsForDay(state, state.selectedDay);
   const dailyInterviewers = getInterviewersForDay(state, state.selectedDay);
 
@@ -23,10 +52,13 @@ export default function Application(props) {
   // }
 
   const baseURL = "http://localhost:8001";
+
   const parsedAppointments = dailyAppointments.map((appts) => {
     const interview = getInterview(state, appts.interview);
-    return <Appointment key={appts.id} id={appts.id} interview={interview} time={appts.time} dailyInterviewers={dailyInterviewers} />
+    return <Appointment cancelInterview={cancelInterview} bookInterview={bookInterview} key={appts.id} id={appts.id} interview={interview} time={appts.time} dailyInterviewers={dailyInterviewers} />
   });
+
+  
   parsedAppointments.push(<Appointment key="last" time="5pm" />)
 
   useEffect(() => {
@@ -44,9 +76,7 @@ export default function Application(props) {
     }); //setSTate function MUST RETURN THE NEW STATE which goes after the prev arg. By calling ...prev we spread out the previous state object, and anything that goes after hte comma is the new values we are appyling to the prev states. This function overall returns a new state object with the days and appointment state keys changed with new values. 
   }, []);
 
-  console.log(state.interviewers)
-
-  
+  // console.log(state.interviewers)
 
   return (
     <main className="layout">

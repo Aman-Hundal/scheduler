@@ -3,9 +3,10 @@ import Button from 'components/Button';
 import InterviewerList from 'components/InterviewerList';
 
 export default function Form(props) {
-  const { studentProp, interviewerProp, interviewers, onSave, onCancel } = props;
-  const [student, setStudent] = useState(studentProp || "" );
-  const [interviewer, setInterviewer ] = useState(interviewerProp || null); // || operator will evalato to left hand if the value is truthy, else willl be right hand expression as itll be valued as a falesy
+  const { currentStudent, currentInterviewer, interviewers, save, onCancel } = props;
+  console.log('curreInter', currentInterviewer)
+  const [student, setStudent] = useState(currentStudent|| "" );
+  const [interviewer, setInterviewer ] = useState(currentInterviewer || null); // || operator will evalato to left hand if the value is truthy, else willl be right hand expression as itll be valued as a falesy
   const reset = function() {
     setStudent((prev) => {
       return prev = "";
@@ -21,6 +22,8 @@ export default function Form(props) {
     onCancel();
   }
 
+  console.log("RECENT CONSOLE:", interviewer)
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -34,13 +37,13 @@ export default function Form(props) {
           />
         </form>
         <InterviewerList 
-          interviewers={interviewers} onChange={setInterviewer} value={interviewer}
+          interviewers={interviewers} onChange={setInterviewer} value={interviewer} currentInterviewer={currentInterviewer}
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={onSave}>Save</Button>
+          <Button confirm onClick={() => {save(student, interviewer)}}>Save</Button>
         </section>
       </section>
     </main>
