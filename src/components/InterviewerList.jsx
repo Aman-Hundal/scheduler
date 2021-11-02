@@ -3,9 +3,9 @@ import "components/InterviewerList.scss";
 import InterviewerListItem from './InterviewerListItem'; //imports the component to use. Remember components are just functions, so we have export and import them to use them
 
 export default function InterviewerList(props) {
-  const { interviewers, value, onChange, currentInterviewer } = props; //call in the props taken from the parent. Props are just data passed down from parent. These are then passed down to this components childnre and so on (prop drilling)
-  console.log("value:", value)
-  console.log("current int", currentInterviewer)
+  const { interviewers, value, onChange } = props; //call in the props taken from the parent. Props are just data passed down from parent. These are then passed down to this components childnre and so on (prop drilling)
+  // console.log("value:", value)
+  // console.log("current int", currentInterviewer)
   const parsedInterviewers = interviewers.map((elm) => { // IMPORTANT -> map is done to create a new/modified array of interviewlistitem components with associated/correct props. The correct props needed are outlined in the interiewlistitem component; this interviewlistitem component takes in these outlined/passed down props with (denoted with {}) and creates the component data from these passed down props/data
     if (value === elm.id) {
       return <InterviewerListItem selected={elm.id === value} setInterviewer={() => onChange(elm.id)} id={elm.id} name={elm.name} avatar={elm.avatar} key={elm.id} />

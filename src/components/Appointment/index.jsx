@@ -7,11 +7,11 @@ import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
 import Confirm from "components/Appointment/Confirm";
 import useVisualMode from "hooks/useVisualMode"; // we want to use the custom hook to determine the mode and then conditioanlly render the matching component
-
+import Error from "components/Appointment/Error";
 
 export default function Appointment(props) {
   const { time, interview, dailyInterviewers, bookInterview, id, cancelInterview } = props
-  // console.log(props.interview)
+  // console.log("INTERVIEW with K:", props.interview)
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -19,6 +19,8 @@ export default function Appointment(props) {
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT"
   const DELETING = "DELETING"
+  const ERROR_SAVE = "ERROR_SAVE"
+  const ERROR_DELETE = "ERROR_DElete"
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -30,13 +32,25 @@ export default function Appointment(props) {
       interviewer
     };
     await bookInterview(id, interview) //The data gathered here is enough to change our state object and create a new appointment to our DB-> we have an appt id, sutendet name and interview numbe.
-    transition(SHOW);
+    .then((res) => {
+      transition(SHOW);
+    })
+    .catch((error) => {
+      console.error("ERROR MESSAGE:", error);
+      transition(ERROR_SAVE, true);
+    });
   }
 
   const deleteAppt = async function() {
-    transition(DELETING);
-    await cancelInterview(id);
-    transition(EMPTY);
+    transition(DELETING, true);
+    await cancelInterview(id)
+    .then((res) => {
+      transition(EMPTY);
+    })
+    .catch((error) => {
+      console.error("ERROR MESSAGE:", error);
+      transition(ERROR_DELETE, true);
+    });
   }
 
   return (
@@ -48,7 +62,9 @@ export default function Appointment(props) {
       { mode === CONFIRM && <Confirm message={"Are you sure you would like to delete your appointment?"} onCancel={back} onConfirm={deleteAppt} /> }
       { mode === SHOW && <Show id={id} interviewer={interview.interviewer} student={interview.student} onDelete={() => transition(CONFIRM)} onEdit={() => transition(EDIT)} /> }
       { mode === CREATE && <Form interviewers={dailyInterviewers} save={save} onCancel={() => back()} /> }
-      { mode === EDIT && <Form interviewers={dailyInterviewers} save={save} onCancel={() => back()} currentStudent={interview.student} currentInterviewer={interview.interviewer} /> }
+      { mode === EDIT && <Form interviewers={dailyInterviewers} save={save} onCancel={() => back()} currentStudent={interview.student} currentInterviewer={interview.interviewer.id} /> }
+      { mode === ERROR_DELETE && <Error message={"We apologize, there was an error cancelling your appointment. Please try again"} onClose={() => back()} /> }
+      { mode === ERROR_SAVE && <Error message={"We apologize, there was an error booking your appointment. Please try again"} onClose={() => back()} /> }
     </article>
   );
 }

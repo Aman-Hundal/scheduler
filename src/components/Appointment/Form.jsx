@@ -4,7 +4,7 @@ import InterviewerList from 'components/InterviewerList';
 
 export default function Form(props) {
   const { currentStudent, currentInterviewer, interviewers, save, onCancel } = props;
-  console.log('curreInter', currentInterviewer)
+  // console.log('curreInterviewre with K', currentInterviewer)
   const [student, setStudent] = useState(currentStudent|| "" );
   const [interviewer, setInterviewer ] = useState(currentInterviewer || null); // || operator will evalato to left hand if the value is truthy, else willl be right hand expression as itll be valued as a falesy
   const reset = function() {
@@ -22,7 +22,7 @@ export default function Form(props) {
     onCancel();
   }
 
-  console.log("RECENT CONSOLE:", interviewer)
+  // console.log("RECENT CONSOLE:", interviewer)
 
   return (
     <main className="appointment__card appointment__card--create">

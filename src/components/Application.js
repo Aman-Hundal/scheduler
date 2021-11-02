@@ -39,7 +39,6 @@ export default function Application(props) {
       console.log(response.status)
       setState({...state, appointments})
     })
-    
   }
 
   const dailyAppointments = getAppointmentsForDay(state, state.selectedDay);
@@ -61,7 +60,7 @@ export default function Application(props) {
   
   parsedAppointments.push(<Appointment key="last" time="5pm" />)
 
-  useEffect(() => {
+  useEffect(() => { //initial axios call to gather/get al the intial API Data.
     //package your api requests into variables (we can call them promise variables)
     const appointmentsPromise = axios.get(baseURL+"/api/appointments");
     const daysPromise = axios.get(baseURL+"/api/days");
