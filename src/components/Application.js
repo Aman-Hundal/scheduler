@@ -54,3 +54,5 @@ export default function Application(props) {
 
 //When we call the setDay action, it changes the day state. When we change the state, the <Application> renders and passes the new day to the <DayList>. 
 // The <DayList> renders and passes props to the <DayListItem> children causing the updates to the selected visual state.
+
+//to do -> add a interviewre error check w/ test + final review of requirements + deploy on heroku

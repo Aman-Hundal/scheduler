@@ -4,10 +4,10 @@ import InterviewerList from 'components/InterviewerList';
 
 export default function Form(props) {
   const { currentStudent, currentInterviewer, interviewers, save, onCancel } = props;
-  // console.log('curreInterviewre with K', currentInterviewer)
   const [student, setStudent] = useState(currentStudent|| "" );
   const [interviewer, setInterviewer ] = useState(currentInterviewer || null); // || operator will evalato to left hand if the value is truthy, else willl be right hand expression as itll be valued as a falesy
   const [error, setError] = useState("");
+  const [errorInterviewer, setErrorInterviewer] = useState("");
   const reset = function() {
     setStudent((prev) => {
       return prev = "";
@@ -21,6 +21,8 @@ export default function Form(props) {
   const cancel = function() {
     reset();
     onCancel();
+    setError(prev => "");
+    setErrorInterviewer(prev => "");
   }
 
   function validate() {
@@ -28,7 +30,14 @@ export default function Form(props) {
       setError("Student name cannot be blank");
       return;
     }
-  
+
+    if (interviewer === null || currentInterviewer === null) {
+      setErrorInterviewer("Please select an interviewer");
+      return;
+    }
+    
+    setError(prev => "");
+    setErrorInterviewer(prev => "");
     save(student, interviewer);
   }
 
@@ -51,6 +60,7 @@ export default function Form(props) {
         <InterviewerList 
           interviewers={interviewers} onChange={setInterviewer} value={interviewer} currentInterviewer={currentInterviewer}
         />
+      <section className="appointment__validation">{errorInterviewer}</section>
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
