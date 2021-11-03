@@ -7,6 +7,7 @@ export default function Form(props) {
   // console.log('curreInterviewre with K', currentInterviewer)
   const [student, setStudent] = useState(currentStudent|| "" );
   const [interviewer, setInterviewer ] = useState(currentInterviewer || null); // || operator will evalato to left hand if the value is truthy, else willl be right hand expression as itll be valued as a falesy
+  const [error, setError] = useState("");
   const reset = function() {
     setStudent((prev) => {
       return prev = "";
@@ -22,6 +23,15 @@ export default function Form(props) {
     onCancel();
   }
 
+  function validate() {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+  
+    save(student, interviewer);
+  }
+
   // console.log("RECENT CONSOLE:", interviewer)
 
   return (
@@ -34,8 +44,10 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
+            data-testid="student-name-input"
           />
         </form>
+        <section className="appointment__validation">{error}</section>
         <InterviewerList 
           interviewers={interviewers} onChange={setInterviewer} value={interviewer} currentInterviewer={currentInterviewer}
         />
@@ -43,7 +55,7 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={() => {save(student, interviewer)}}>Save</Button>
+          <Button confirm onClick={() => {validate()}}>Save</Button>
         </section>
       </section>
     </main>

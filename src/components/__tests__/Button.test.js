@@ -10,7 +10,7 @@ it("renders without crashing", () => {
   render(<Button />);
 });
 
-it.skip("renders its `children` prop as text", () => {
+it("renders its `children` prop as text", () => { //testing  that the text "Default" is in the doc after we render teh button component.
   const { getByText } = render(<Button>Default</Button>);
   expect(getByText("Default")).toBeInTheDocument();
 });

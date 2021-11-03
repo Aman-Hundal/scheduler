@@ -1,6 +1,7 @@
 import React from 'react';
 import "components/InterviewerList.scss";
 import InterviewerListItem from './InterviewerListItem'; //imports the component to use. Remember components are just functions, so we have export and import them to use them
+import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
   const { interviewers, value, onChange } = props; //call in the props taken from the parent. Props are just data passed down from parent. These are then passed down to this components childnre and so on (prop drilling)
@@ -13,8 +14,6 @@ export default function InterviewerList(props) {
     return <InterviewerListItem setInterviewer={() => onChange(elm.id)} id={elm.id} name={elm.name} avatar={elm.avatar} key={elm.id} />
   });
 
-
-
   //parsedInterviewers Array is called with {} in the u/l. JSX AUTOMATICALLY LOOPS THROUGH ARRAYS AND SPITS OUT THE VALUES WHEN ARRAYS ARE USED IN JSX. Therefore no forloop neded to extract the interviewlistitem components created in the maap
 
   return (
@@ -24,3 +23,7 @@ export default function InterviewerList(props) {
     </section>
   )
 }
+
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};
