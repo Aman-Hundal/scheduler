@@ -72,7 +72,7 @@ const useApplicationData = function(initial) {
     };
     await axios.put(baseURL+`/api/appointments/${id}`, {interview}) //axios call to update our api db with the inerview data sent over
     .then((response) => {
-      console.log(response.status)
+      // console.log(response.status)
       const days = updateSpots(state, appointments, id);
       setState({...state, days, appointments}); //this recreates the state object and then after the comma it replaces the previous appointments with the new appointments created above. With spread operators if we pass in a value with the same name as a value that exists in the spreaded obj after a comma the value mentioned will be adjusted/modified/updated 
     })
@@ -84,7 +84,7 @@ const useApplicationData = function(initial) {
     const appointments = {...state.appointments, [id]: deletedAppointment};
     await axios.delete(baseURL+`/api/appointments/${id}`)
     .then((response) => {
-      console.log(response.status)
+      // console.log(response.status)
       const days = updateSpots(state, appointments, id);
       setState({...state, days, appointments})
     })
