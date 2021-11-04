@@ -7,6 +7,7 @@ export default function InterviewerListItem(props) {
 
   let interviewerClass = classNames('interviewers__item', {'interviewers__item--selected': selected});
 
+  //InterviewerListItem component rendering.
   return (
     <li className={interviewerClass} onClick={setInterviewer}>
       <img

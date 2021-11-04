@@ -6,32 +6,32 @@ import Empty from "components/Appointment/Empty";
 import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
 import Confirm from "components/Appointment/Confirm";
-import useVisualMode from "hooks/useVisualMode"; // we want to use the custom hook to determine the mode and then conditioanlly render the matching component
+import useVisualMode from "hooks/useVisualMode";
 import Error from "components/Appointment/Error";
 
 export default function Appointment(props) {
-  const { time, interview, dailyInterviewers, bookInterview, id, cancelInterview } = props
-  // console.log("INTERVIEW with K:", props.interview)
+  const { time, interview, dailyInterviewers, bookInterview, id, cancelInterview } = props;
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
   const CONFIRM = "CONFIRM";
-  const EDIT = "EDIT"
-  const DELETING = "DELETING"
-  const ERROR_SAVE = "ERROR_SAVE"
-  const ERROR_DELETE = "ERROR_DElete"
+  const EDIT = "EDIT";
+  const DELETING = "DELETING";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DElete";
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
   
-  const save = async function(name, interviewer) {//this function is passed to the form component. Ensures that the child can call the action with the correct data. The form should capture the name and interviewre and pas them to props.onSave as args. We then create a new interview object to be passed to props.bookInterview.
+  // Save function which creates an interview object which is sent to our API DB. This function creates a new interview and edits existing inteviews.
+  const save = async function(name, interviewer) {
     transition(SAVING);
-    const interview = { //this function captures the name and interviewre and pass them to on.Save args. We then create a new interview obj to be passed to props.bookinterview. 
+    const interview = {
       student: name,
       interviewer
     };
-    await bookInterview(id, interview) //The data gathered here is enough to change our state object and create a new appointment to our DB-> we have an appt id, sutendet name and interview numbe.
+    await bookInterview(id, interview)
     .then((res) => {
       transition(SHOW);
     })
@@ -41,6 +41,7 @@ export default function Appointment(props) {
     });
   }
 
+  //Delete function which sends an API request to our DB API and sets an interview object to null. This function deletes/cancels an existing interview. 
   const deleteAppt = async function() {
     transition(DELETING, true);
     await cancelInterview(id)
@@ -53,6 +54,7 @@ export default function Appointment(props) {
     });
   }
 
+  //Appointment component rendering
   return (
     <article className="appointment"> 
       <Header time={time} />

@@ -1,3 +1,4 @@
+//Function that generates the available appointments for each day. 
 export const getAppointmentsForDay = function(state, day) {
   const resultArr = [];
   
@@ -17,22 +18,20 @@ export const getAppointmentsForDay = function(state, day) {
 
   for (const key of apptKeysArr) {
     if (dailyAppts[0].appointments.includes(Number(key))) {
-      resultArr.push(state.appointments[key])
+      resultArr.push(state.appointments[key]);
     }
   }
 
   return resultArr;
 };
 
+//Function which helps generate an interview object with the student name and interviewer object. This object is eventually passed to the save/bookedInterview functions to create/delete/edit interviews. 
 export const getInterview = function (state, interview) {
   const newObj = {};
   const interviewerObj = state.interviewers;
-  // interview.student
-  // interview.interviewers
   if (!interview) {
     return null;
   }
-  // console.log(interviewerObj)
   for (const key in interviewerObj) {
     if (Number(key) === interview.interviewer) {
       newObj.student = interview.student;
@@ -42,6 +41,7 @@ export const getInterview = function (state, interview) {
   return newObj;
 }
 
+//Function which generates the available interviewer objects for the coresponding day. 
 export const getInterviewersForDay = function(state, day) {
   const resultArr = [];
   
@@ -61,7 +61,7 @@ export const getInterviewersForDay = function(state, day) {
 
   for (const key of interKeysArr) {
     if (dailyinter[0].interviewers.includes(Number(key))) {
-      resultArr.push(state.interviewers[key])
+      resultArr.push(state.interviewers[key]);
     }
   }
 

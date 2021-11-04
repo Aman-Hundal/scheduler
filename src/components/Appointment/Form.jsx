@@ -5,9 +5,11 @@ import InterviewerList from 'components/InterviewerList';
 export default function Form(props) {
   const { currentStudent, currentInterviewer, interviewers, save, onCancel } = props;
   const [student, setStudent] = useState(currentStudent|| "" );
-  const [interviewer, setInterviewer ] = useState(currentInterviewer || null); // || operator will evalato to left hand if the value is truthy, else willl be right hand expression as itll be valued as a falesy
+  const [interviewer, setInterviewer ] = useState(currentInterviewer || null);
   const [error, setError] = useState("");
   const [errorInterviewer, setErrorInterviewer] = useState("");
+
+  //Reset function. Sets student and interviewer states in the form to blank. This is executed in the cancel function. 
   const reset = function() {
     setStudent((prev) => {
       return prev = "";
@@ -18,6 +20,7 @@ export default function Form(props) {
     })
   }
 
+  // Cancel function which resets the form fields, and error messages. Fucntion is executed on the click of the cancel button in the form field.
   const cancel = function() {
     reset();
     onCancel();
@@ -25,6 +28,7 @@ export default function Form(props) {
     setErrorInterviewer(prev => "");
   }
 
+  //Validation function which ensures that the student name is not blank, and a interviewer is selected. If either is true, the save function cannot be executed. 
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");
@@ -41,8 +45,7 @@ export default function Form(props) {
     save(student, interviewer);
   }
 
-  // console.log("RECENT CONSOLE:", interviewer)
-
+  //Form component rendering. Uses the React pattern of a controlled component. 
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
