@@ -2,9 +2,9 @@
 
 Simple, single page interview scheduling application created with React. 
 
-Interview Scheduler allows you to book daily appointments throughout the weekdays with available interviewers. Users can create new appointments, delete existing appointments and edit their appointments. 
+Interview Scheduler allows you to book daily appointments throughout the weekdays with available interviewers. Users can create new appointments, delete existing appointments and edit their appointments. Comes with error handling such as student name and interviewer selection validation and many other features.
 
-Project is made 100% using React and Javascript and the tech stack includes:
+Project is made primarly using React and Javascript and the tech stack includes:
 - React
 - Webpack, Babel
 - Axios
