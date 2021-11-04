@@ -19,11 +19,11 @@ Deployed via Heroku.
 
 ## Final Product
 
-!["Main"]()
+!["Main"](https://github.com/KewlKewlKewl/scheduler/blob/master/docs/Main.png?raw=true)
 
-!["Creating"]()
+!["Creating"](https://github.com/KewlKewlKewl/scheduler/blob/master/docs/Create%202.0.png?raw=true)
 
-!["Deleting"]()
+!["Deleting"](https://github.com/KewlKewlKewl/scheduler/blob/master/docs/Delete.png?raw=true)
 
 ## Setup
 
