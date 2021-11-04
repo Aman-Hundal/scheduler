@@ -1,8 +1,33 @@
 # Interview Scheduler
 
+Simple, single page interview scheduling application created with React. 
+
+Interview Scheduler allows you to book daily appointments throughout the weekdays with available interviewers. Users can create new appointments, delete existing appointments and edit their appointments. 
+
+Project is made 100% using React and Javascript and the tech stack includes:
+- React
+- Webpack, Babel
+- Axios
+- Storybook
+- Jest
+- Testing Library
+- Cypress
+- Webpack Dev Server
+- Express
+
+Deployed via Heroku.
+
+## Final Product
+
+!["Main"]()
+
+!["Creating"]()
+
+!["Deleting"]()
+
 ## Setup
 
-Install dependencies with `npm install`. React practice project.
+Install dependencies with `npm install`.
 
 ## Running Webpack Development Server
 
