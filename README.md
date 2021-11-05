@@ -15,8 +15,6 @@ Project is made primarly using React and Javascript and the tech stack includes:
 - Webpack Dev Server
 - Express
 
-Deployed via Heroku.
-
 ## Final Product
 
 !["Main"](https://github.com/KewlKewlKewl/scheduler/blob/master/docs/Main.png?raw=true)
